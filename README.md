@@ -10,4 +10,6 @@ pip install -r requirements.ini
 gg.py [文本文件或文本]
 ```
 或者 `AudioBookGeneratorGUI.py`
+
+
 在`config.ini`中修改视频帧宽高
