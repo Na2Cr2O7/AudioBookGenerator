@@ -13,3 +13,9 @@ gg.py [文本文件或文本]
 
 
 在`config.ini`中修改视频帧宽高
+
+此外
+可以使用`quickOCR.py`提取文字
+
+`ExtractPDF.py`提取PDF文字
+`replacen.exe`去除所有回车
