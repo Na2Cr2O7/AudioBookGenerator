@@ -1,15 +1,19 @@
+以下是你提供的 `README.md` 的**优化版本**，在保持原有内容的基础上，提升了结构清晰度、语言流畅性，并修复了格式错误和逻辑顺序问题：
+
+---
 
 # 📚 AudioBookGenerator - 合成有声书视频的工具
 
 > 一个用于将文本自动合成为有声书视频的工具，适用于生成教学视频、朗读视频等内容。
 
-## ⚠️ 仅支持 Windows 系统
+## ⚠️ **仅支持 Windows 系统**
 
 ---
 
 ## ✅ 功能简介
 
 - 文本转语音（TTS）
+- 自动生成背景视频画面
 - 支持 GUI 图形界面操作
 - 提供 PDF 提取、OCR 识别、文本清理等辅助脚本
 
@@ -17,16 +21,40 @@
 
 ## 🛠️ 安装指南
 
+### 1. 安装 Python（推荐版本）
 
+请先安装 Python（建议使用 Python 3.12.2）：
 
+🔗 [Python 3.12.2 下载地址](https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe)
 
-###  安装 FFmpeg
+安装完成后，在命令行中验证是否成功：
 
-> **注意：此工具依赖 FFmpeg，请确保已安装并配置好环境变量。**
+```bash
+python --version
+```
+
+### 2. 安装项目依赖
+
+```bash
+pip install -r requirements.ini
+```
+
+### 3. 安装 EasyOCR 和 pdfplumber（额外依赖）
+
+这两个库未包含在 `requirements.ini` 中，请手动安装：
+
+```bash
+pip install easyocr pdfplumber
+```
+
+### 4. 安装 FFmpeg
+
+> **⚠️ 注意：此工具依赖 FFmpeg，请确保已安装并配置好环境变量。**
 
 #### 安装方法：
 
-1. 前往 (https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z) [https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z] 下载 ffmpeg
+1. 下载地址（推荐完整版）：
+   🔗 [https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z)
 2. 解压后将 `ffmpeg/bin` 路径添加到系统环境变量 `PATH` 中。
 3. 验证安装：
 
@@ -36,15 +64,7 @@ ffmpeg -version
 
 如果输出版本信息，则表示安装成功。
 
-4.安装Python
-
-(Python3.12.2) [https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe]
-
-```bash
-pip install -r requirements.ini
-```
 ---
-
 
 ## 🧰 使用方式
 
@@ -54,7 +74,15 @@ pip install -r requirements.ini
 python gg.py [文本文件或直接输入的文本]
 ```
 
+示例：
+
+```bash
+python gg.py content.txt
+```
+
 ### 方式二：图形界面运行
+
+双击运行：
 
 ```bash
 有声书生成器可视化界面.cmd
@@ -67,6 +95,7 @@ python gg.py [文本文件或直接输入的文本]
 你可以在 `config.ini` 中修改以下设置：
 
 - 视频帧宽度与高度
+
 ---
 
 ## 📎 辅助工具
@@ -78,11 +107,6 @@ python gg.py [文本文件或直接输入的文本]
 | `replacen.exe`    | 去除文本中的所有换行符                  |
 
 ---
-#### 你需要安装easyOCR和pdfplumber
-```python
-pip install easyocr
-pip install pdfplumber
-```
 
 ## 📝 示例用法
 
@@ -95,15 +119,19 @@ python ExtractPDF.py book.pdf
 
 # 合成有声书视频
 python gg.py content.txt
+
+# 去除换行
+replacen.exe 1.txt>2.txt
 ```
 
 ---
 
 ## 💡 注意事项
 
-- 所有生成文件保存在根文件夹中。
+- 所有生成文件默认保存在根目录下。
 - 如遇音频/视频处理错误，请确认 FFmpeg 是否正确安装。
 - GUI 版本更适合非技术用户使用。
+- 编码为 UTF-8。
 
 ---
 
