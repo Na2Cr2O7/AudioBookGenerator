@@ -1,1 +1,1 @@
-".\python312\python.exe" %*
+"python.exe" %*
