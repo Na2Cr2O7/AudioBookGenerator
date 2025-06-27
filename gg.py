@@ -4,7 +4,13 @@ if len(argv)<2:
     raise SystemExit
 import os
 import configparser
-
+DEFAULT_CONFIG='''[general]
+frameX=1080
+frameY=1920
+fontName=AlibabaPuHuiTi-3-55-Regular.ttf
+rate=100
+'''
+startPath=os.getcwd()
 
 if os.path.exists('config.ini'):
     config = configparser.ConfigParser()
@@ -14,10 +20,7 @@ if os.path.exists('config.ini'):
     fontName=config['general']['fontName']
 else:
     with open('config.ini','w',encoding='utf-8') as f:
-        print('[general]',file=f)
-        print(f'frameX={1080}',file=f)
-        print(f'frameY={1920}',file=f)
-        print(f'fontName=AlibabaPuHuiTi-3-55-Regular.ttf',file=f)
+        f.write(DEFAULT_CONFIG)
     sizex=1080
     sizey=1920
 
@@ -119,9 +122,9 @@ if __name__ == '__main__':
     text=splitText(text)
     if len(text)<MAX_SPLIT:
         
-        filename=getMovie(text)
-        shutil.move(filename,os.path.abspath(f'{cleanDir(argv[1])}.mp4'))
-        raise SystemExit
+        videoPath=getMovie(text)
+        print(videoPath)
+        videoName=os.path.basename(videoPath)
     else:
         VideoList=[]
         for i in tqdm.tqdm(splitArray(text,MAX_SPLIT)):
@@ -130,14 +133,21 @@ if __name__ == '__main__':
             gc.collect()
             VideoList.append(MoveiePath)
         print(Fore.RESET,VideoList)
-        concentrateVideo(VideoList,f'{cleanDir(argv[1])}.mp4')
-        gc.collect()
-        print(Fore.CYAN)
-        for i in tqdm.tqdm(FolderstoDelete):   
-            try:
-                shutil.rmtree(i)
-            except:
-                pass    
-        print(Fore.RESET)
+        videoName=f'{cleanDir(argv[1])}.mp4'
+        videoPath=os.path.join(os.getcwd(),videoName)
+        concentrateVideo(VideoList,videoName)
+    newVideoPath=os.path.join(os.path.abspath(startPath),videoName)
+    shutil.move(videoPath,newVideoPath)
+    
+    gc.collect()
+    print(Fore.CYAN)
+    for i in tqdm.tqdm(FolderstoDelete):   
+        try:
+            shutil.rmtree(i)
+        except:
+            pass    
+
+    std.cout<<Fore.RESET << f'文件已保存至 {newVideoPath}' << std.endl
+    print(Fore.RESET)
             
     

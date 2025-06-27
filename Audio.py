@@ -1,5 +1,8 @@
 import pyttsx3
 from moviepy import *
+import configparser
+config=configparser.ConfigParser()
+config.read('config.ini')
 count=0
 def fetchAudio(text):
     pass
@@ -17,6 +20,12 @@ getAudioBackends=getAudio
 
 def speak(text):
     engine = pyttsx3.init()
+    try:
+        rate= int(config['general']['rate'])
+    except Exception as e:
+        print(e)
+        rate=150
+    engine.setProperty('rate',rate)
     engine.say(text)
     engine.runAndWait()
     engine.stop()

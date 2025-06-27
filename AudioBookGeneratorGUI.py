@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 import os
 
+PythonDir='python.cmd'
+
 def open_file():
     file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt")])
     if file_path:
@@ -16,17 +18,26 @@ def open_file():
 
 def run_gg_py():
     file_path = entry.get()
-    if file_path:
-        try:
-            os.system(f'python gg.py {file_path}')
-        except Exception as e:
-            messagebox.showerror("错误", f"{e}")
+
+    if not file_path:
+        messagebox.showwarning("警告", "未输入文件地址,将使用文本框中的内容作为输入")
+        file_path=text_box.get(1.0, tk.END)
+        with open('temp.txt', 'w', encoding='utf-8') as file:
+            file.write(file_path)
+        file_path='temp.txt'
+        
+    try:
+        X=os.system(f'"{PythonDir}" gg.py {file_path}')
+    except Exception as e:
+        messagebox.showerror("错误", f"{e}")
+    if X:
+        messagebox.showerror("错误", f"合成音频书失败({X})")
     else:
-        messagebox.showwarning("警告", "未输入文件地址")
+        messagebox.showinfo("提示", f"合成音频书成功({X})")
 
 # 创建主窗口
 root = tk.Tk()
-root.title("文件展示与传递工具")
+root.title("有声读物生成器可视化界面")
 
 # 创建文本框用于显示文件内容
 text_box = tk.Text(root, height=20, width=60)
