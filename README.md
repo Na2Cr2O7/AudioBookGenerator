@@ -26,7 +26,7 @@
 
 #### 安装方法：
 
-1. 前往 (https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z)[https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z] 下载 ffmpeg
+1. 前往 (https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z) [https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z] 下载 ffmpeg
 2. 解压后将 `ffmpeg/bin` 路径添加到系统环境变量 `PATH` 中。
 3. 验证安装：
 
@@ -35,8 +35,10 @@ ffmpeg -version
 ```
 
 如果输出版本信息，则表示安装成功。
+
 4.安装Python
-(Python3.12.2)[https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe]
+
+(Python3.12.2) [https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe]
 
 ```bash
 pip install -r requirements.ini
