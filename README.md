@@ -4,7 +4,7 @@
 
 > 一个用于将文本自动合成为有声书视频的工具，适用于生成教学视频、朗读视频等内容。
 
-## ⚠️ **仅支持 Windows 系统**
+### ⚠️ **仅支持 Windows 系统**
 
 ---
 
@@ -37,7 +37,7 @@ python --version
 pip install -r requirements.ini
 ```
 
-### 3. 安装 EasyOCR 和 pdfplumber（额外依赖）
+### 3. 安装 EasyOCR 和 pdfplumber（额外依赖- 提供 PDF 提取、OCR 识别、文本清理等辅助脚本）
 
 这两个库未包含在 `requirements.ini` 中，请手动安装：
 
@@ -61,7 +61,17 @@ ffmpeg -version
 ```
 
 如果输出版本信息，则表示安装成功。
-
+## config.ini
+```text
+[general]
+frameX=1080;输出大小
+frameY=1920
+fontName=AlibabaPuHuiTi-3-55-Regular.ttf ;字体文件
+rate=300 ;TTS音调
+server=localhost:5001 ;getAudioBackends=getAudio2时选择地址，(http://{server}/{text})
+audioConcentrator=moviepy ;or wavConcentrator
+;使用moviepy或者wavConcentrator合并音频
+```
 ---
 
 ## 🧰 使用方式
