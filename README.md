@@ -4,7 +4,7 @@
 > 一个基于 Python 的自动化工具，将文本转换为带语音朗读与背景画面的有声书视频，适用于教学视频、朗读内容、知识分享等场景。
 
 <div align="center">
-  <img src="./demo.jpg" alt="Demo 示例截图" width="600" />
+  <img src="./2A2.png" alt="Demo 示例截图" width="600" />
   <p><em>示例：从文本到有声书视频（实际效果可能因配置而异）</em></p>
 </div>
 
