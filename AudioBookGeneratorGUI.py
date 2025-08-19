@@ -39,10 +39,14 @@ def run_gg_py():
 root = tk.Tk()
 root.title("有声读物生成器可视化界面")
 
+label1=tk.Label(root, text="文本：")
+label1.pack(pady=10)
 # 创建文本框用于显示文件内容
 text_box = tk.Text(root, height=20, width=60)
 text_box.pack(pady=20)
 
+label2=tk.Label(root, text="输入的文件地址：")
+label2.pack(pady=10)
 # 创建Entry用于显示文件地址
 entry = tk.Entry(root, width=60)
 entry.pack(pady=10)

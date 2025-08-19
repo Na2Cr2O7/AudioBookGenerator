@@ -59,6 +59,7 @@ def splitArray(arr:list,n:int=1000):
 
 def splitText(text:str):
     text=text.replace('\n\n','\n')
+    text=text.replace('\t','')
     for i in punctuation:
         text=text.replace(i,'[SPLIT]')
     text=text.replace(' ','')

@@ -7,6 +7,7 @@ from tqdm import tqdm, trange
 from stdcpp import cout, endl
 import dill as pickle
 from colorama import Fore, Back, Style, init
+import configparser
 def bgImage(size=(1920,1080),gray=25):
     cv2.imwrite("A.jpg",gray*np.ones((size[1],size[0],3),np.uint8))
 if not os.path.exists("A.jpg"):
@@ -50,8 +51,21 @@ def drawText(img,text_center,text_bottom,font,text_color,bottom_margin,width,hei
         frame = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
         return frame
 from threading import Thread
+import subprocess
 thread=None
 def createAudio(audioFiles:list,output:str='temp_audio.mp3')->int:
+    # config=configparser.ConfigParser()
+    # config.read(r'..\config.ini')
+
+    # if config['general']['audioConcentrator']=='wavConcentrator':
+    #     with open('files.txt','w',encoding='utf-8') as f:
+    #          for file in audioFiles:
+    #             f.write(file+'\n')
+    #     result=subprocess.run(['wavConcentrator','-f','files.txt','-o',output],capture_output=True)
+    #     if result.returncode!=0:
+    #         cout<<result.stderr.decode('utf-8')<<endl
+    #         finalAudio=AudioFileClip(output)
+    #         return finalAudio.duration
     global thread
     audio_clips = []
     #audioFiles:[file name,duration]
