@@ -1,35 +1,48 @@
-![1](/2A2.png)
 
-# 📚 AudioBookGenerator - 合成有声书视频的工具
+# 📚 AudioBookGenerator - 一键生成有声书视频
 
-> 一个用于将文本自动合成为有声书视频的工具，适用于生成教学视频、朗读视频等内容。
+> 一个基于 Python 的自动化工具，将文本转换为带语音朗读与背景画面的有声书视频，适用于教学视频、朗读内容、知识分享等场景。
 
-### ⚠️ **仅支持 Windows 系统**
+<div align="center">
+  <img src="./demo.jpg" alt="Demo 示例截图" width="600" />
+  <p><em>示例：从文本到有声书视频（实际效果可能因配置而异）</em></p>
+</div>
 
 ---
 
-## ✅ 功能简介
+## ✅ 功能亮点
 
-- 文本转语音（TTS）
-- 自动生成背景视频画面
-- 支持 GUI 图形界面操作
-- 提供 PDF 提取、OCR 识别、文本清理等辅助脚本
+- 🔊 **文本转语音 (TTS)**：支持本地或远程语音引擎，清晰自然
+- 🎬 **自动生成视频画面**：配合背景图/视频 + 滚动字幕，打造沉浸式体验
+- 🖱️ **图形化界面 (GUI)**：非技术用户也能轻松上手
+- 📄 **PDF 提取**：使用 `pdfplumber` 快速提取文档文字
+- 🖼️ **OCR 识别**：通过 EasyOCR 从图片中提取中文/英文文本
+- 🧹 **文本清理工具**：去除换行、冗余空格，提升朗读流畅度
+- ⚙️ **高度可配置**：支持自定义字体、语速、分辨率、音频合并方式等
 
+---
+
+## ⚠️ 系统要求
+
+- **操作系统**：仅支持 Windows（因依赖 `moviepy` 和 FFmpeg 环境）
+- **Python 版本**：推荐 `Python 3.12.2`（兼容 3.9+）
 ---
 
 ## 🛠️ 安装指南
 
-### 1. 安装 Python（推荐版本）
+### 1. 安装 Python
 
-请先安装 Python（建议使用 Python 3.12.2）：
+👉 下载并安装 [Python 3.12.2](https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe)
 
-🔗 [Python 3.12.2 下载地址](https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe)
+安装时请勾选 **“Add Python to PATH”**
 
-安装完成后，在命令行中验证是否成功：
-
+验证安装：
 ```bash
 python --version
+# 应输出：Python 3.12.2
 ```
+
+---
 
 ### 2. 安装项目依赖
 
@@ -37,110 +50,135 @@ python --version
 pip install -r requirements.ini
 ```
 
-### 3. 安装 EasyOCR 和 pdfplumber（额外依赖- 提供 PDF 提取、OCR 识别、文本清理等辅助脚本）
+> 💡 注意：`requirements.ini` 是你的依赖文件名，通常标准为 `requirements.txt`，建议重命名为 `requirements.txt` 以符合惯例。
 
-这两个库未包含在 `requirements.ini` 中，请手动安装：
+---
+
+### 3. 安装额外依赖（OCR 与 PDF 支持）
 
 ```bash
 pip install easyocr pdfplumber
 ```
 
-### 4. 安装 FFmpeg
+> 📌 提示：EasyOCR 首次运行会自动下载模型（约 50MB），请确保网络畅通。
 
-> **⚠️ 注意：此工具依赖 FFmpeg，请确保已安装并配置好环境变量。**
+---
 
-#### 安装方法：
+### 4. 安装 FFmpeg（关键步骤）
 
-1. 下载地址（推荐完整版）：
+本工具依赖 FFmpeg 进行音视频合成，请务必正确安装并配置环境变量。
+
+#### 安装步骤：
+
+1. 下载完整版 FFmpeg：  
    🔗 [https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z)
-2. 解压后将 `ffmpeg/bin` 路径添加到系统环境变量 `PATH` 中。
-3. 验证安装：
 
+2. 解压后，将 `ffmpeg/bin` 目录添加到系统环境变量 `PATH` 中。
+
+3. 验证安装：
 ```bash
 ffmpeg -version
 ```
+若显示版本信息，则安装成功 ✅
 
-如果输出版本信息，则表示安装成功。
-## config.ini
-```text
-[general]
-frameX=1080;输出大小
-frameY=1920
-fontName=AlibabaPuHuiTi-3-55-Regular.ttf ;字体文件
-rate=300 ;TTS音调
-server=localhost:5001 ;getAudioBackends=getAudio2时选择地址，(http://{server}/{text})
-audioConcentrator=moviepy ;or wavConcentrator
-;使用moviepy或者wavConcentrator合并音频
-```
 ---
 
-## 🧰 使用方式
+## 🧩 配置说明（config.ini）
+
+你可以根据需求修改以下参数：
+
+```ini
+[general]
+frameX = 1080           ; 视频宽度（像素）
+frameY = 1920           ; 视频高度（像素），默认竖屏 9:16（适合手机）
+fontName = AlibabaPuHuiTi-3-55-Regular.ttf  ; 使用的字体文件（需放在项目目录）
+rate = 300              ; TTS 语速（单位：字/分钟，可调范围 150~400）
+server = localhost:5001 ; 当 audioConcentrator=getAudio2 时，指定 TTS 服务地址
+```
+
+> ✅ 推荐字体：[阿里巴巴普惠体](https://alibabafonts.taobao.com/)（免费可商用）
+
+---
+
+## 🚀 使用方式
 
 ### 方式一：命令行运行
 
 ```bash
-python gg.py [文本文件或直接输入的文本]
-```
-
-示例：
-
-```bash
 python gg.py content.txt
 ```
 
-### 方式二：图形界面运行
+支持直接输入文本：
+```bash
+python gg.py "这是一个测试句子。"
+```
+
+---
+
+### 方式二：图形界面（推荐新手使用）
 
 双击运行：
-
-```bash
+```
 有声书生成器可视化界面.cmd
 ```
 
----
-
-## ⚙️ 配置选项
-
-你可以在 `config.ini` 中修改以下设置：
-
-- 视频帧宽度与高度
+无需代码，拖拽或粘贴文本即可生成视频。
 
 ---
 
-## 📎 辅助工具
+## 🧰 辅助工具一览
 
-| 工具名             | 功能描述                             |
-|------------------|------------------------------------|
-| `quickOCR.py`     | 快速从图片中提取文字                   |
-| `ExtractPDF.py`   | 从 PDF 文件中提取纯文本                 |
-| `replacen.exe`    | 去除文本中的所有换行符                  |
+| 工具 | 说明 |
+|------|------|
+| `quickOCR.py` | 从图片中快速提取文字（支持中英文） |
+| `ExtractPDF.py` | 从 PDF 文件提取纯文本内容 |
+| `replacen.exe` | 去除文本中的所有换行符（Windows 小工具） |
 
----
-
-## 📝 示例用法
+### 示例用法：
 
 ```bash
-# 使用 OCR 提取图片中的文字
+# OCR 图片识别
 python quickOCR.py image.png
 
-# 从 PDF 提取文本
+# 提取 PDF 文本
 python ExtractPDF.py book.pdf
 
-# 合成有声书视频
-python gg.py content.txt
+# 清理换行（生成单行文本）
+replacen.exe input.txt > output.txt
 
-# 去除换行
-replacen.exe 1.txt>2.txt
+# 生成有声书视频
+python gg.py cleaned_text.txt
 ```
 
 ---
 
-## 💡 注意事项
+## 📁 输出路径
 
-- 所有生成文件默认保存在根目录下。
-- 如遇音频/视频处理错误，请确认 FFmpeg 是否正确安装。
-- GUI 版本更适合非技术用户使用。
-- 编码为 UTF-8。
+所有生成的音频、视频文件默认保存在项目根目录下：
+
 
 ---
 
-如有问题欢迎提交 Issue 或联系作者。欢迎贡献代码和改进建议！
+## ❗ 常见问题
+
+| 问题 | 解决方案 |
+|------|----------|
+| `ModuleNotFoundError` | 检查是否安装了所有依赖，尤其是 `easyocr` 和 `pdfplumber` |
+| `FFmpeg not found` | 确保已添加 `ffmpeg/bin` 到系统 PATH 并重启终端 |
+| GUI 启动闪退 | 右键 `.cmd` 文件 → “以管理员身份运行”，或查看日志输出 |
+| 字体显示乱码 | 确保 `fontName` 指向正确的 `.ttf` 文件，且支持中文 |
+
+---
+
+## 🤝 贡献与反馈
+
+欢迎提交 Issue 或 Pull Request！  
+如果你有以下想法，非常期待你的参与：
+- 支持 macOS/Linux
+- 多语言语音切换（英文、日文等）
+- 添加背景音乐淡入淡出
+- 批量处理多个文本文件
+- Web 版前端界面
+
+---
+
