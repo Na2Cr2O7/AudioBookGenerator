@@ -49,10 +49,6 @@ python --version
 pip install -r requirements.ini
 ```
 
-> 💡 注意：`requirements.ini` 是你的依赖文件名，通常标准为 `requirements.txt`，建议重命名为 `requirements.txt` 以符合惯例。
-
----
-
 ### 3. 安装额外依赖（OCR 与 PDF 支持）
 
 ```bash
